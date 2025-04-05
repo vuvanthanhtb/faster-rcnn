@@ -34,7 +34,7 @@ class VOCDataset(VOCDetection):
 if __name__ == "__main__":
   transform = ToTensor()
   train_dataset = VOCDataset(
-      root="data", year="2012", image_set="train", transform=transform)
+      root="data", year="2012", image_set="train", transform=transform, download=True)
   image, target = train_dataset[2000]
   pprint(target)
   pprint(image.shape)
