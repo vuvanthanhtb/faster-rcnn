@@ -1,15 +1,17 @@
-from pprintpp import pprint
 import torch
+from pprintpp import pprint
 from torchvision.datasets import VOCDetection
 from torchvision.transforms import ToTensor
 
 
 class VOCDataset(VOCDetection):
-  def __init__(self, root, year, image_set='train', download=False, transform=None, target_transform=None, transforms=None):
+  def __init__(self, root, year, image_set='train', download=False, transform=None, target_transform=None,
+               transforms=None):
     super().__init__(root, year, image_set, download,
                      transform, target_transform, transforms)
     self.categories = ['background', 'aeroplane', 'bicycle', 'bird', 'boat', 'bottle', 'bus', 'car', 'cat', 'chair',
-                       'cow', 'diningtable', 'dog', 'horse', 'motorbike', 'person', 'pottedplant', 'sheep', 'sofa', 'train', 'tvmonitor']
+                       'cow', 'diningtable', 'dog', 'horse', 'motorbike', 'person', 'pottedplant', 'sheep', 'sofa',
+                       'train', 'tvmonitor']
 
   def __getitem__(self, index):
     image, data = super().__getitem__(index)
@@ -25,8 +27,8 @@ class VOCDataset(VOCDetection):
     all_bboxes = torch.FloatTensor(all_bboxes)
     all_labels = torch.LongTensor(all_labels)
     target = {
-        "boxes": all_bboxes,
-        "labels": all_labels
+      "boxes": all_bboxes,
+      "labels": all_labels
     }
     return image, target
 
@@ -34,7 +36,7 @@ class VOCDataset(VOCDetection):
 if __name__ == "__main__":
   transform = ToTensor()
   train_dataset = VOCDataset(
-      root="data", year="2012", image_set="train", transform=transform, download=True)
+    root="data", year="2012", image_set="val", transform=transform, download=True)
   image, target = train_dataset[2000]
   pprint(target)
   pprint(image.shape)
